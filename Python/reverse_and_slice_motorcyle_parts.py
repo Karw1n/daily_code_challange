@@ -1,4 +1,5 @@
 # Coddy.tech Daily Challenge 12/06/2025
+# Coddy.tech DC 12/06/2025
 '''Create a function named organize_parts that receives parts_list, start_index, and end_index as its parameters.
 
 As a vintage motorcycle enthusiast, you need to organize your collection of motorcycle parts. Your task is to reverse the order of parts and then select a specific range from the reversed list.
@@ -15,7 +16,7 @@ start_index (int): The starting index for slicing (inclusive).
 end_index (int): The ending index for slicing (exclusive).
 The function returns a list of strings representing the selected range of parts from the reversed list.'''
 
-lst, start, end = ['carburetor','piston','spark plug', 'clutch', 'brake pad'], 0, 2
+parts_list, start, end = 'carburetor,piston,spark plug,clutch,brake pad', 0, 2
 
 # So function takes in a list, and two indexs (start and end), and we want to modify the list and return a slice of the list as stated by the start and indexes
 # def organize_parts(parts_list, start_index, end_index):
@@ -23,10 +24,10 @@ lst, start, end = ['carburetor','piston','spark plug', 'clutch', 'brake pad'], 0
 
 # What I am going to do first is create the functionality to perform steps 1 to 3, and once they all work I'll put it together in a function.
 
-# 1. Reverse the entire string of parts, which involves reversing the list
-lst.reverse() # Using the built in reverse() function we can easily reverse the list
-print(lst) # ['brake pad', 'clutch', 'spark plug', 'piston', 'carburetor']
-# As we want to reverse the entire string too, we have to reverse each string in the list, my initial approach to complete this is using slicing ([::-1])
-for i in range(len(lst)):
-  lst[i] = (lst[i])[::-1] # 
-print(lst) # ['dap ekarb', 'hctulc', 'gulp kraps', 'notsip', 'roterubrac']
+# 1. Reverse the entire string of parts. My approach is to use slicing iteration [::-1]
+reversed_parts_string = parts_list[::-1]
+print(reversed_parts_string) # dap ekarb,hctulc,gulp kraps,notsip,roterubrac
+# 2. Split the reversed string into a list of individual parts.
+# Upon reading this requirement I realised that the input is not a list but a string and therefore need to go back and remodify the functionality to accomadate strings not lists.
+reversed_parts_list = reversed_parts_string.split(',')
+print(reversed_parts_list) # ['dap ekarb', 'hctulc', 'gulp kraps', 'notsip', 'roterubrac']
