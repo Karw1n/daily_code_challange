@@ -25,15 +25,27 @@ parts_list, start, end = 'carburetor,piston,spark plug,clutch,brake pad', 0, 2
 # What I am going to do first is create the functionality to perform steps 1 to 3, and once they all work I'll put it together in a function.
 
 # 1. Reverse the entire string of parts. My approach is to use slicing iteration [::-1]
-reversed_parts_string = parts_list[::-1]
-print(reversed_parts_string) # dap ekarb,hctulc,gulp kraps,notsip,roterubrac
+# reversed_parts_string = parts_list[::-1]
+# print(reversed_parts_string) # dap ekarb,hctulc,gulp kraps,notsip,roterubrac
 
 # 2. Split the reversed string into a list of individual parts.
 # Upon reading this requirement I realised that the input is not a list but a string and therefore need to go back and remodify the functionality to accomadate strings not lists.
-reversed_parts_list = reversed_parts_string.split(',')
-print(reversed_parts_list) # ['dap ekarb', 'hctulc', 'gulp kraps', 'notsip', 'roterubrac']
+# reversed_parts_list = reversed_parts_string.split(',')
+# print(reversed_parts_list) # ['dap ekarb', 'hctulc', 'gulp kraps', 'notsip', 'roterubrac']
 
 # 3. Return a slice of the reversed list based on the given start and end indices.
 # Using slicing I shall return the wanted sliced section
-final_list = reversed_parts_list[start:end]
-print(final_list)
+# final_list = reversed_parts_list[start:end]
+# print(final_list)
+
+# Now that each functionality has been tried and tested I shall put it together into one function
+def organize_parts(parts_list, start_index, end_index):
+    # 1. Reverse the entire string of parts 
+    reversed_parts_string = parts_list[::-1] 
+    # 2. Split the reversed string into a list of individual parts.
+    reversed_parts_list = reversed_parts_string.split(',')
+    # 3. Return a slice of the reversed list based on the given start and end indices.
+    return reversed_parts_list[start_index:end_index]
+  
+print(organize_parts(parts_list, start, end)) # ['dap ekarb', 'hctulc']
+# Success. As it is a relatively basic challenge I did not have to account for any edge cases.
