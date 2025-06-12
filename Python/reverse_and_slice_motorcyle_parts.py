@@ -1,0 +1,28 @@
+# Coddy.tech Daily Challenge 12/06/2025
+'''Create a function named organize_parts that receives parts_list, start_index, and end_index as its parameters.
+
+As a vintage motorcycle enthusiast, you need to organize your collection of motorcycle parts. Your task is to reverse the order of parts and then select a specific range from the reversed list.
+
+The function should perform the following steps:
+
+Reverse the entire string of parts.
+Split the reversed string into a list of individual parts.
+Return a slice of the reversed list based on the given start and end indices.
+Parameters:
+
+parts_list (str): A string of motorcycle parts separated by commas.
+start_index (int): The starting index for slicing (inclusive).
+end_index (int): The ending index for slicing (exclusive).
+The function returns a list of strings representing the selected range of parts from the reversed list.'''
+
+lst, start, end = ['carburetor','piston','spark plug', 'clutch', 'brake pad'], 0, 2
+
+# So function takes in a list, and two indexs (start and end), and we want to modify the list and return a slice of the list as stated by the start and indexes
+# def organize_parts(parts_list, start_index, end_index):
+#   pass
+
+# What I am going to do first is create the functionality to perform steps 1 to 3, and once they all work I'll put it together in a function.
+
+# 1. Reverse the entire string of parts, which involves reversing the list
+lst.reverse() # Using the built in reverse() function we can easily reverse the list
+print(lst) # ['brake pad', 'clutch', 'spark plug', 'piston', 'carburetor']
