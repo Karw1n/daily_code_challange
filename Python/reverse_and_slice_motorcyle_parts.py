@@ -26,3 +26,7 @@ lst, start, end = ['carburetor','piston','spark plug', 'clutch', 'brake pad'], 0
 # 1. Reverse the entire string of parts, which involves reversing the list
 lst.reverse() # Using the built in reverse() function we can easily reverse the list
 print(lst) # ['brake pad', 'clutch', 'spark plug', 'piston', 'carburetor']
+# As we want to reverse the entire string too, we have to reverse each string in the list, my initial approach to complete this is using slicing ([::-1])
+for i in range(len(lst)):
+  lst[i] = (lst[i])[::-1] # 
+print(lst) # ['dap ekarb', 'hctulc', 'gulp kraps', 'notsip', 'roterubrac']
