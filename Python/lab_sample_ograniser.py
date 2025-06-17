@@ -38,3 +38,18 @@ def analyze_samples(sample_ids, start_index, end_index):
     # 3. Returning the samples
     return sample_ids
         
+# Coddy's solution. Pretty much identical but the recombination was simpler.
+# A very good way to do it via slicing
+def analyze_samples_soltion(sample_ids, start_index, end_index):
+    # Step 1: Sort the entire array of sample IDs in ascending order
+    sorted_samples = sorted(sample_ids)
+    
+    # Step 2: Reverse the order of samples between start_index and end_index (inclusive)
+    subset = sorted_samples[start_index:end_index+1]
+    subset.reverse()
+    
+    # Step 3: Construct the final arranged array
+    final_arranged = sorted_samples[:start_index] + subset + sorted_samples[end_index+1:]
+    
+    # Return the final arranged array of sample IDs
+    return final_arranged
