@@ -1,7 +1,6 @@
 import requests
 from html.parser import HTMLParser
 
-
 class myHTMLParser(HTMLParser):
   def __init__(self):
     super().__init__()
@@ -12,7 +11,6 @@ class myHTMLParser(HTMLParser):
     self.table        = []
     self.current_cell_data = ''
     
-    
   def handle_starttag(self, tag, attrs):
     if tag == 'table':
       self.in_table = True
@@ -22,7 +20,6 @@ class myHTMLParser(HTMLParser):
     elif tag == 'td' and self.in_row:
       self.in_cell = True
       self.current_cell_data = ''
-  
   
   def handle_endtag(self, tag):
     if tag == 'table':
@@ -41,27 +38,31 @@ class myHTMLParser(HTMLParser):
     if self.in_cell:
       self.current_cell_data += data.strip()
     
-url = 'https://docs.google.com/document/d/e/2PACX-1vTER-wL5E8YC9pxDx43gk8eIds59GtUUk4nJo_ZWagbnrH0NFvMXIw6VWFLpf5tWTZIT9P9oLIoFJ6A/pub'
+def parse_table_from_url(url: str):
+  response = requests.get(url)
+  parser = myHTMLParser()
+  parser.feed(response.text)
+  return parser.table
 
-response = requests.get(url)
-html_input = response.text
-
-parser = myHTMLParser()
-parser.feed(html_input)
-
-char_map = {}
-# Skip the header row
-for row in parser.table[1:]:
-    try:
-      x = int(row[0])
-      char = row[1]
-      y = int(row[2])
-      char_map[(x, y)] = char
-    except (ValueError, IndexError):
-      continue # In case there's a null row
-    
+def build_char_map(table):
+  char_map = {}
+  # Skip the header row
+  for row in table[1:]:
+      try:
+        x = int(row[0])
+        char = row[1]
+        y = int(row[2])
+        char_map[(x, y)] = char
+      except (ValueError, IndexError):
+        continue # In case there's a null row
+  return char_map
+  
 # Get the grid size
 def print_image(data):  
+  if not data:
+    print('No data to display')
+    return
+  
   max_x = max(x for (x, y) in data.keys())
   max_y = max(y for (x, y) in data.keys())
 
@@ -71,4 +72,9 @@ def print_image(data):
       row += data.get((j, max_y - i), ' ')
     print(row)
     
-print_image(char_map) 
+def render_character_image(url):
+  table = parse_table_from_url(url)
+  char_map = build_char_map(table)
+  print_image(char_map)
+  
+render_character_image('https://docs.google.com/document/d/e/2PACX-1vTER-wL5E8YC9pxDx43gk8eIds59GtUUk4nJo_ZWagbnrH0NFvMXIw6VWFLpf5tWTZIT9P9oLIoFJ6A/pub')
