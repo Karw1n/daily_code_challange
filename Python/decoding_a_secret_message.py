@@ -71,5 +71,4 @@ def print_image(data):
       row += data.get((j, max_y - i), ' ')
     print(row)
     
-print_image(char_map)
-  
+print_image(char_map) 
