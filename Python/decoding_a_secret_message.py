@@ -41,7 +41,7 @@ class myHTMLParser(HTMLParser):
     if self.in_cell:
       self.current_cell_data += data.strip()
     
-url = 'https://docs.google.com/document/d/e/2PACX-1vRMx5YQlZNa3ra8dYYxmv-QIQ3YJe8tbI3kqcuC7lQiZm-CSEznKfN_HYNSpoXcZIV3Y_O3YoUB1ecq/pub'
+url = 'https://docs.google.com/document/d/e/2PACX-1vTER-wL5E8YC9pxDx43gk8eIds59GtUUk4nJo_ZWagbnrH0NFvMXIw6VWFLpf5tWTZIT9P9oLIoFJ6A/pub'
 
 response = requests.get(url)
 html_input = response.text
@@ -49,6 +49,27 @@ html_input = response.text
 parser = myHTMLParser()
 parser.feed(html_input)
 
-# Print results
-for row in parser.table:
+char_map = {}
+# Skip the header row
+for row in parser.table[1:]:
+    try:
+      x = int(row[0])
+      char = row[1]
+      y = int(row[2])
+      char_map[(x, y)] = char
+    except (ValueError, IndexError):
+      continue # In case there's a null row
+    
+# Get the grid size
+def print_image(data):  
+  max_x = max(x for (x, y) in data.keys())
+  max_y = max(y for (x, y) in data.keys())
+
+  for i in range(max_y + 1):
+    row = ''
+    for j in range(max_x + 1):
+      row += data.get((j, max_y - i), ' ')
     print(row)
+    
+print_image(char_map)
+  
