@@ -1,6 +1,7 @@
 import requests
 from html.parser import HTMLParser
 
+# Custom HTML parser that extracts the table data from the google doc (HTML document)
 class myHTMLParser(HTMLParser):
   def __init__(self):
     super().__init__()
@@ -37,13 +38,16 @@ class myHTMLParser(HTMLParser):
   def handle_data(self, data):
     if self.in_cell:
       self.current_cell_data += data.strip()
-    
-def parse_table_from_url(url: str):
+
+# Fetches the HTML from URL and parses the table
+def parse_table_from_url(url):
   response = requests.get(url)
   parser = myHTMLParser()
   parser.feed(response.text)
   return parser.table
 
+# Convert parsed table into a dictionary
+# e.g. (x, y) : character
 def build_char_map(table):
   char_map = {}
   # Skip the header row
@@ -56,8 +60,8 @@ def build_char_map(table):
       except (ValueError, IndexError):
         continue # In case there's a null row
   return char_map
-  
-# Get the grid size
+
+# Render the image using character positions
 def print_image(data):  
   if not data:
     print('No data to display')
